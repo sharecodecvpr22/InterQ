@@ -62,10 +62,21 @@ python main_direct.py --model_name resnet18 --conf_path imagenet.hocon --id=0
 
 ## Evaluate pre-trained models
 
-The pre-trained models can be downloaded in [here]() 
+The pre-trained models and corresponding logs can be downloaded in [here]() 
 
 Pleas make sure the "qw" and "qa" in *.hocon, *hocon, model_name and model_path are correct.
 
 ```
 python test.py --model_name resnet18/mobilenet_w1/mobilenetv2_w1 --model_path path_to_pre-trained model --conf_path path_to_*.hocon
 ```
+
+Results of pre-trained models are shown in below:
+
+| Model     | Bit-width| Dataset  | Top-1 Acc.  |
+| --------- | -------- | -------- | ----------- | 
+| resnet18  | W4A4 | ImageNet | 66.47%    | 
+| resnet18  | W5A5 | ImageNet | 69.94%    | 
+| mobilenetv1  | W4A4 | ImageNet | 51.36%    |
+| mobilenetv1  | W5A5 | ImageNet | 68.17%    | 
+| mobilenetv2  | W4A4 | ImageNet | 65.10%    | 
+| mobilenetv2  | W5A5 | ImageNet | 71.28%    |
