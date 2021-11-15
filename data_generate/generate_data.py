@@ -50,8 +50,8 @@ def arg_parse():
                         default=0.4,
                         help='interClassMargin')
     parser.add_argument('--save_path_head',
-                        type=float,
-                        default=str,
+                        type=str,
+                        default='',
                         help='save_path_head')
 
     args = parser.parse_args()

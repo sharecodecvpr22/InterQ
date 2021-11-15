@@ -48,7 +48,7 @@ class DistillData(object):
         self.teacher_running_mean.append(module.running_mean)
         self.teacher_running_var.append(module.running_var)
 
-    def modify_labels(self, labels, targetPro):
+    def modify_labels(self, labels, targetPro, model_name):
 
         new_labels = []
         for i in range(len(labels)):
@@ -56,12 +56,22 @@ class DistillData(object):
             if random.random() < 0.5:
 
                 label = labels[i]
-                label_other = random.randint(0, 999)
-                label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
 
-                label_i = F.one_hot(label, num_classes=1000).float()
+                if model_name == 'resnet20_cifar10':
+                    # label_other = random.randint(0, 9)
+                    label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
+                    label_i = F.one_hot(label, num_classes=10).float()
+                elif model_name == 'resnet20_cifar100':
+                    # label_other = random.randint(0, 99)
+                    label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
+                    label_i = F.one_hot(label, num_classes=100).float()
+                else::
+                    # label_other = random.randint(0, 999)
+                    label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
+                    label_i = F.one_hot(label, num_classes=1000).float()
+
                 label_i[label] = label_target
-                label_i[label_other] += 1-label_target
+                # label_i[label_other] += 1-label_target
                 label_i = label_i.cuda()
                 assert torch.argmax(label_i) == label
             else:
@@ -187,7 +197,14 @@ class DistillData(object):
 
         print(data_path, label_path)
 
-        shape = (batch_size, 3, 224, 224)
+        if model_name == 'resnet20_cifar10':
+            shape = (batch_size, 3, 32, 32)
+        elif model_name == 'resnet20_cifar100':
+            shape = (batch_size, 3, 32, 32)
+        else:
+            shape = (batch_size, 3, 224, 224)
+
+
         # initialize hooks and single-precision model
         teacher_model = teacher_model.cuda()
         teacher_model = teacher_model.eval()
@@ -219,7 +236,13 @@ class DistillData(object):
                 break
             # initialize the criterion, optimizer, and scheduler
 
-            RRC = transforms.RandomResizedCrop(size=224,scale=(augMargin, 1.0))
+            if model_name == 'resnet20_cifar10':
+                RRC = transforms.RandomResizedCrop(size=32,scale=(augMargin, 1.0))
+            elif model_name == 'resnet20_cifar100':
+                RRC = transforms.RandomResizedCrop(size=32,scale=(augMargin, 1.0))
+            else:
+                RRC = transforms.RandomResizedCrop(size=224,scale=(augMargin, 1.0))
+
             RHF = transforms.RandomHorizontalFlip()
 
             gaussian_data = torch.randn(shape).cuda()
@@ -230,10 +253,14 @@ class DistillData(object):
                                                              verbose=False,
                                                              patience=50)
 
-
-            labels = torch.randint(0, 1000, (len(gaussian_data),)).cuda()
+            if model_name == 'resnet20_cifar10':
+                labels = torch.randint(0, 10, (len(gaussian_data),)).cuda()
+            elif model_name == 'resnet20_cifar100':
+                labels = torch.randint(0, 100, (len(gaussian_data),)).cuda()
+            else:
+                labels = torch.randint(0, 1000, (len(gaussian_data),)).cuda()
             labels_mask = F.one_hot(labels, num_classes=1000).float()
-            new_labels = self.modify_labels(labels, targetPro)
+            new_labels = self.modify_labels(labels, targetPro, model_name)
             gt = labels.data.cpu().numpy()
 
             old_features = []
@@ -243,7 +270,12 @@ class DistillData(object):
                 l = gt[j]
                 if l not in last_feature_dict:
                     # ll = list(last_feature_dict.keys())[0]
-                    old_features.append(torch.randn(512))
+                    if model_name == 'resnet18':
+                        old_features.append(torch.randn(512))
+                    elif model_name == 'mobilenet_w1':
+                        old_features.append(torch.randn(1024))
+                    elif model_name == 'mobilenetv2_w1':
+                        old_features.append(torch.randn(1280))
                     mask.append(torch.tensor(0.))
                 else:
                     # random_index = random.randint(0, len(last_feature_dict[l]) - 1)

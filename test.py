@@ -45,6 +45,9 @@ class DataLoader(object):
         if self.dataset in ["imagenet"]:
             self.train_loader, self.test_loader = self.imagenet(
                 dataset=self.dataset)
+        elif self.dataset in ["cifar100", "cifar10"]:
+            self.train_loader, self.test_loader = self.cifar(
+                dataset=self.dataset)
         else:
             assert False, "invalid data set"
 
@@ -76,6 +79,46 @@ class DataLoader(object):
             shuffle=False,
             num_workers=self.n_threads,
             pin_memory=False)
+        return None, test_loader
+
+    def cifar(self, dataset="cifar100"):
+        """
+        dataset: cifar
+        """
+        if dataset == "cifar10":
+            norm_mean = [0.49139968, 0.48215827, 0.44653124]
+            norm_std = [0.24703233, 0.24348505, 0.26158768]
+        elif dataset == "cifar100":
+            norm_mean = [0.50705882, 0.48666667, 0.44078431]
+            norm_std = [0.26745098, 0.25568627, 0.27607843]
+
+        else:
+            assert False, "Invalid cifar dataset"
+
+        test_data_root = self.dataset_root
+
+        test_transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(norm_mean, norm_std)])
+
+        if self.dataset == "cifar10":
+            test_dataset = dsets.CIFAR10(root=test_data_root,
+                                         train=False,
+                                         transform=test_transform,
+                                         download=True)
+        elif self.dataset == "cifar100":
+            test_dataset = dsets.CIFAR100(root=test_data_root,
+                                          train=False,
+                                          transform=test_transform,
+                                          download=True)
+        else:
+            assert False, "invalid data set"
+
+        test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                                  batch_size=200,
+                                                  shuffle=False,
+                                                  pin_memory=True,
+                                                  num_workers=self.n_threads)
         return None, test_loader
 
 
@@ -230,7 +273,7 @@ class ExperimentDesign:
         try:
 
             self.freeze_model(self.model)
-            if self.settings.dataset in ["imagenet"]:
+            if self.settings.dataset in ["imagenet", "cifar100", "cifar10"]:
                 test_error, test_loss, test5_error = test(model=self.model, test_loader=self.test_loader)
 
             else:
