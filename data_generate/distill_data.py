@@ -284,6 +284,8 @@ class DistillData(object):
                         old_features.append(torch.randn(1024))
                     elif model_name == 'mobilenetv2_w1':
                         old_features.append(torch.randn(1280))
+                    elif model_name in ['resnet20_cifar10', "resnet20_cifar100"]:
+                        old_features.append(torch.randn(64))
                     mask.append(torch.tensor(0.))
                 else:
                     # random_index = random.randint(0, len(last_feature_dict[l]) - 1)

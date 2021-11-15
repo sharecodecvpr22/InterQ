@@ -69,7 +69,7 @@ class DataLoader(object):
 		
 		self.logger.info("|===>Creating data loader for " + self.dataset)
 		
-		if self.dataset in ["cifar100"]:
+		if self.dataset in ["cifar100", "cifar10"]:
 			self.train_loader, self.test_loader = self.cifar(
 				dataset=self.dataset)
 		
