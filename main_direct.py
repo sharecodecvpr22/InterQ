@@ -108,13 +108,20 @@ class direct_dataset(Dataset):
 		normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
 										 std=[0.229, 0.224, 0.225])
 
-
-		self.train_transform = transforms.Compose([
-			transforms.RandomResizedCrop(size=224, scale=(0.5, 1.0)),
-			transforms.RandomHorizontalFlip(),
-			# transforms.ToTensor(),
-			# normalize
-		])
+		if self.settings.dataset in ["cifar100", "cifar10"]:
+			self.train_transform = transforms.Compose([
+				transforms.RandomResizedCrop(size=32, scale=(0.5, 1.0)),
+				transforms.RandomHorizontalFlip(),
+				# transforms.ToTensor(),
+				# normalize
+			])
+		else:
+			self.train_transform = transforms.Compose([
+				transforms.RandomResizedCrop(size=224, scale=(0.5, 1.0)),
+				transforms.RandomHorizontalFlip(),
+				# transforms.ToTensor(),
+				# normalize
+			])
 
 		self.tmp_data = None
 		self.tmp_label = None
@@ -357,7 +364,7 @@ class ExperimentDesign:
 		best_top5 = 100
 		start_time = time.time()
 
-		dataset = direct_dataset(self.logger)
+		dataset = direct_dataset(self.logger, self.settings.dataset)
 
 		direct_dataload = torch.utils.data.DataLoader(dataset,
 													   batch_size=min(self.settings.batchSize, len(dataset)),
