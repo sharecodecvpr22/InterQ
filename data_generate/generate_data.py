@@ -16,9 +16,9 @@ def arg_parse():
                         type=str,
                         default='resnet18',
                         choices=[
-                            'resnet18', 'resnet50', 'inceptionv3',
+                            'resnet18', 'mobilenet_w1'
                             'mobilenetv2_w1', 'shufflenet_g1_w1',
-                            'resnet20_cifar10', 'sqnxt23_w2', 'regnetx_600m'
+                            'resnet20_cifar10', 'resnet20_cifar100', 'regnetx_600m'
                         ],
                         help='model to be quantized')
     parser.add_argument('--batch_size',
