@@ -102,13 +102,13 @@ class Generator_imagenet(nn.Module):
 
 
 class direct_dataset(Dataset):
-	def __init__(self, logger):
+	def __init__(self, logger, dataset):
 
 		self.logger = logger
 		normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
 										 std=[0.229, 0.224, 0.225])
 
-		if self.settings.dataset in ["cifar100", "cifar10"]:
+		if ataset in ["cifar100", "cifar10"]:
 			self.train_transform = transforms.Compose([
 				transforms.RandomResizedCrop(size=32, scale=(0.5, 1.0)),
 				transforms.RandomHorizontalFlip(),
