@@ -357,7 +357,7 @@ class ExperimentDesign:
 		best_top5 = 100
 		start_time = time.time()
 
-		dataset = direct_dataset(self.logger, self.args)
+		dataset = direct_dataset(self.logger)
 
 		direct_dataload = torch.utils.data.DataLoader(dataset,
 													   batch_size=min(self.settings.batchSize, len(dataset)),
