@@ -1,4 +1,4 @@
-# Code for InterQ
+# Code for under review (CVPR2022) paper: InterQ
 
 ## Requirements
 
@@ -62,15 +62,23 @@ python main_direct.py --model_name resnet18 --conf_path imagenet.hocon --id=0
 
 ## Evaluate pre-trained models
 
-The pre-trained models and corresponding logs can be downloaded in [here]() 
+The pre-trained models and corresponding logs can be downloaded in [here](https://drive.google.com/drive/folders/1wk0WNxHhJiUky2ymEYJBg4o6oXLM15e4?usp=sharing) 
 
-Pleas make sure the "qw" and "qa" in *.hocon, *hocon, model_name and model_path are correct.
+Pleas make sure the "qw" and "qa" in *.hocon, *hocon, "--model_name" and "--model_path" are correct.
 
+For cifar10/100
+```
+python test.py --model_name resnet20_cifar10 --model_path path_to_pre-trained model --conf_path cifar10_resnet20.hocon
+
+python test.py --model_name resnet20_cifar100 --model_path path_to_pre-trained model --conf_path cifar100_resnet20.hocon
+```
+
+For ImageNet
 ```
 python test.py --model_name resnet18/mobilenet_w1/mobilenetv2_w1 --model_path path_to_pre-trained model --conf_path path_to_*.hocon
 ```
 
-Results of pre-trained models are shown in below:
+Results of pre-trained models are shown below:
 
 | Model     | Bit-width| Dataset  | Top-1 Acc.  |
 | --------- | -------- | -------- | ----------- | 
