@@ -266,7 +266,7 @@ class DistillData(object):
                 labels_mask = F.one_hot(labels, num_classes=100).float()
             else:
                 labels = torch.randint(0, 1000, (len(gaussian_data),)).cuda()
-                labels_mask = F.one_hot(labels, num_classes=10).float()
+                labels_mask = F.one_hot(labels, num_classes=1000).float()
 
             new_labels = self.modify_labels(labels, targetPro, model_name)
             gt = labels.data.cpu().numpy()
