@@ -46,7 +46,7 @@ cd InterQ
 
 3. Modify the "Path_to_data_pickle" in main_direct.py (line 122 and line 135) to the data_path and label_path you just generate from Stage1.
 
-4. Use the below commands to train the quantized network. Pleas noted that the model that generates the data and the quantized model should be the same.
+4. Use the below commands to train the quantized network. Please note that the model that generates the data and the quantized model should be the same.
 
 
 For cifar10/100
@@ -64,9 +64,9 @@ python main_direct.py --model_name resnet18 --conf_path imagenet.hocon --id=0
 
 ## Evaluate pre-trained models
 
-The pre-trained models and corresponding logs can be downloaded in [here](https://drive.google.com/drive/folders/1wk0WNxHhJiUky2ymEYJBg4o6oXLM15e4?usp=sharing) 
+The pre-trained models and corresponding logs can be downloaded [here](https://drive.google.com/drive/folders/1wk0WNxHhJiUky2ymEYJBg4o6oXLM15e4?usp=sharing) 
 
-Pleas make sure the "qw" and "qa" in *.hocon, *.hocon, "--model_name" and "--model_path" are correct.
+Please make sure the "qw" and "qa" in *.hocon, *.hocon, "--model_name" and "--model_path" are correct.
 
 For cifar10/100
 ```
