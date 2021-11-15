@@ -75,7 +75,12 @@ class DistillData(object):
                 label_i = label_i.cuda()
                 assert torch.argmax(label_i) == label
             else:
-                label_i = F.one_hot(labels[i], num_classes=1000).float()
+                if model_name == 'resnet20_cifar10':
+                    label_i = F.one_hot(labels[i], num_classes=10).float()
+                elif model_name == 'resnet20_cifar100':
+                    label_i = F.one_hot(labels[i], num_classes=100).float()
+                else:
+                    label_i = F.one_hot(labels[i], num_classes=1000).float()
                 label_i = label_i.cuda()
 
             new_labels.append(label_i)
@@ -255,11 +260,14 @@ class DistillData(object):
 
             if model_name == 'resnet20_cifar10':
                 labels = torch.randint(0, 10, (len(gaussian_data),)).cuda()
+                labels_mask = F.one_hot(labels, num_classes=10).float()
             elif model_name == 'resnet20_cifar100':
                 labels = torch.randint(0, 100, (len(gaussian_data),)).cuda()
+                labels_mask = F.one_hot(labels, num_classes=100).float()
             else:
                 labels = torch.randint(0, 1000, (len(gaussian_data),)).cuda()
-            labels_mask = F.one_hot(labels, num_classes=1000).float()
+                labels_mask = F.one_hot(labels, num_classes=10).float()
+
             new_labels = self.modify_labels(labels, targetPro, model_name)
             gt = labels.data.cpu().numpy()
 
