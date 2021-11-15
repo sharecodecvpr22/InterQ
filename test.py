@@ -138,20 +138,8 @@ class ExperimentDesign:
 
     def _set_model(self):
 
-        if self.settings.dataset in ["imagenet"]:
-            if self.model_name == 'resnet18':
-                self.model = ptcv_get_model('resnet18', pretrained=False)
-            elif self.model_name == 'mobilenet_w1':
-                self.model = ptcv_get_model('mobilenet_w1', pretrained=False)
-            elif self.model_name == 'mobilenetv2_w1':
-                self.model = eval('hubconf.{}(pretrained=False)'.format('mobilenetv2'))
-            elif self.model_name == 'regnetx_600m':
-                self.model = ptcv_get_model('regnetx_600m', pretrained=False)
-            else:
-                assert False, "unsupport model: " + self.model_name
-            self.model.eval()
-        else:
-            assert False, "unsupport data set: " + self.settings.dataset
+        self.model = ptcv_get_model(self.model_name, pretrained=False)
+        self.model.eval()
 
     def _set_gpu(self):
         torch.manual_seed(self.settings.manualSeed)
