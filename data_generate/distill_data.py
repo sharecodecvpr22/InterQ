@@ -65,7 +65,7 @@ class DistillData(object):
                     # label_other = random.randint(0, 99)
                     label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
                     label_i = F.one_hot(label, num_classes=100).float()
-                else::
+                else:
                     # label_other = random.randint(0, 999)
                     label_target = torch.FloatTensor(1, 1).uniform_(targetPro, 1).item()
                     label_i = F.one_hot(label, num_classes=1000).float()
@@ -347,7 +347,6 @@ class DistillData(object):
                 loss_target = MSE_loss1(a, new_labels)
                 loss_target = loss_target * labels_mask
                 loss_target = torch.mean(torch.sum(loss_target, dim=1))
-                loss_target = loss_target * 0
 
                 loss_cosineDistance = torch.sum(
                 	torch.clamp(
