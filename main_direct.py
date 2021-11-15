@@ -379,7 +379,7 @@ class ExperimentDesign:
 
 				self.freeze_model(self.model)
 
-				if self.settings.dataset in ["cifar100"]:
+				if self.settings.dataset in ["cifar100","cifar10"]:
 					test_error, test_loss, test5_error = self.trainer.test(epoch=epoch)
 				elif self.settings.dataset in ["imagenet"]:
 					if epoch >= 0:
@@ -428,14 +428,14 @@ def main():
 	option.manualSeed = args.id + 1
 	option.experimentID = option.experimentID + "{:0>2d}_repeat".format(args.id)
 
-	if option.dataset in ["cifar100"]:
+	if option.dataset in ["cifar100","cifar10"]:
 		generator = Generator(option)
 	elif option.dataset in ["imagenet"]:
 		generator = Generator_imagenet(option)
 	else:
 		assert False, "invalid data set"
 
-	experiment = ExperimentDesign(generator, option, args.conf_path)
+	experiment = ExperimentDesign(generator, option, args.conf_path, args)
 	experiment.run()
 
 
