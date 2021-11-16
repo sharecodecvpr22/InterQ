@@ -18,7 +18,7 @@ cd data_generate
 
 Please install all required package in requirements.txt.
 
-"--save_path_head" in run_generate.sh/run_generate_cifar10.sh/run_generate_cifar100.sh is the path where you want to save your generated data pickle.
+"--save_path_head" in **run_generate_cifar10.sh/run_generate_cifar100.sh** is the path where you want to save your generated data pickle.
 
 For cifar10/100
 ```
@@ -28,7 +28,9 @@ bash run_generate_cifar100.sh
 
 For ImageNet
 
-"--model" in run_generate.sh/run_generate_cifar10.sh/run_generate_cifar100.sh is the pre-trained model you want (also is the quantized model). 
+"--save_path_head" in **run_generate.sh** is the path where you want to save your generated data pickle.
+
+"--model" in **run_generate.sh** is the pre-trained model you want (also is the quantized model). 
 You can use resnet18/mobilenet_w1/mobilenetv2_w1.
 ```
 bash run_generate.sh
