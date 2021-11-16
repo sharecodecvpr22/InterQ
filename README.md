@@ -44,7 +44,7 @@ cd IterQ
 
 1. Modify "qw" and "qa" in cifar10_resnet20.hocon/cifar100_resnet20.hocon/imagenet.hocon to select desired bit-width.
 
-2. Modify "dataPath" in cifar10_resnet20.hocon/cifar100_resnet20.hocon/imagenet.hocon to the dataset path.
+2. Modify "dataPath" in cifar10_resnet20.hocon/cifar100_resnet20.hocon/imagenet.hocon to the real dataset path (for construct the test dataloader).
 
 3. Modify the "Path_to_data_pickle" in main_direct.py (line 122 and line 135) to the data_path and label_path you just generate from Stage1.
 
