@@ -1,6 +1,6 @@
 # Code for under review (CVPR2022) paper
 
-# paper name:
+## paper name:
 IntraQ: Learning Synthetic Images with Intra-Class Heterogeneity for Zero-Shot Network Quantization (paper id=3958)
 
 ## Requirements
