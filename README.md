@@ -1,4 +1,4 @@
-# Code for under review (CVPR2022) paper: IterQ
+# Code for under review (CVPR2022) paper: IntraQ: Learning Synthetic Images with Intra-Class Heterogeneity for Zero-Shot Network Quantization (paper id=3958)
 
 ## Requirements
 
@@ -39,7 +39,7 @@ bash run_generate.sh
 ### Stage2: Train the quantized network
 
 ```
-cd IterQ
+cd IntraQ
 ```
 
 1. Modify "qw" and "qa" in cifar10_resnet20.hocon/cifar100_resnet20.hocon/imagenet.hocon to select desired bit-width.
