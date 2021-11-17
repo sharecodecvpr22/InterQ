@@ -42,7 +42,7 @@ bash run_generate.sh
 ### Stage2: Train the quantized network
 
 ```
-cd IntraQ
+cd ..
 ```
 
 1. Modify "qw" and "qa" in cifar10_resnet20.hocon/cifar100_resnet20.hocon/imagenet.hocon to select desired bit-width.
